@@ -8,8 +8,19 @@
         to connect the StudentTable's prop (students) has to be provided by the parent of
          StudentTable(App.vue) using v-bind.vvv
         (name of prop and the data are the same here, but they don't have to be.-->
-    <student-table v-bind:students="students"> </student-table>
-    <student-message></student-message>
+<!--    <student-table v-bind:students="students"> </student-table>-->
+<!--    just came from StudentTable, emits:, show the events we expect to receive using
+        v-on: (name of event, what does App.vue do when that event happens?)  -->
+    <student-table
+        v-bind:students="students"
+        v-on:student-arrived-or-left="studentArrivedOrLeft">
+      <!--    now add method StudentArrivedOrLeft in App.vue below:-->
+    </student-table>
+
+    <!--vvv        v-bind = "name of prop in StudentMessage" = "data from App.vue"-->
+    <student-message
+        v-bind:student="mostRecentStudent">
+    </student-message>
 
  </div>
 </template>
@@ -30,10 +41,13 @@ export default {
   data() {
     return {
       //empty array to start with vvv:
-      students: []
+      students: [],
+    //  from studentMessage student: Object:
+      mostRecentStudent: {}
+    //  then update studentArrivedOrLeft below VV
     }
   },
-  //then add a method to be called when the message is emited from New Student Form, added to app.vue above,
+  //then add a method to be called when the message is emitted from New Student Form, added to app.vue above,
   //and then the array students: [] will have something in it.
   methods: {
     newStudentAdded(student) {
@@ -45,6 +59,32 @@ export default {
         //( ? -1 : 1 )
         return s1.name.toLowerCase() < s2.name.toLowerCase() ? -1 : 1
       })
+    },
+    // now add method StudentArrivedOrLeft in App.vue from <student-table> above in app.vue
+    // will have 2 arguments:
+    studentArrivedOrLeft(student, present) {
+    //    this will arrive from StudentTable, go through above <student-table> and be unpacked here in the
+    //    same order (student, present) as listed in the method (studentArrivedOrLeft(student,present))
+    //  todo find student in array of students
+    //  todo update their present attribute
+    //  use the find function in javascript (https://developer.mozilla.org/en-US/docs/Web/javaScript/reference/global_Objects/array/find)
+    //  to find the first matching element in an array
+    //  here expecting only one matching student (or zero if there is an error)
+    //  student = s, return true if that's the student we're looking for.
+      let updateStudent = this.students.find( function(s){
+        //student is the argument
+        if (s.name === student.name && s.starID === student.starID){
+        //  this is the student we were looking for , so return true:
+          return true
+        }
+      })
+
+      if (updateStudent) {
+        updateStudent.present = present
+        // from mostRecentStudent above:
+        this.mostRecentStudent = updateStudent
+      //  now tell studentMessage about the updated student in the template using v-bind (way at the top)
+      }
     }
   }
 }
