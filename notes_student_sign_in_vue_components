@@ -57,3 +57,25 @@ which somehow went missing in this video.
 $event.srcElement.checked should also be $event.target.checked, as you wrote in the last video.
 
 The input element will look like this, https://github.com/claraj/vue-week-3-student-sign-in/blob/4286ab2354bf1f8cbbd3873ae7ebb2917aa422da/src/components/StudentRow.vue#L5
+
+****Notes in video 7:****
+Sites for icons: https://icons8.com/ and https://thenounproject.com/
+
+Listing events that are emitted:
+As you add events to your components, you can to add
+emits: ['student-arrived-or-left', 'delete-student']
+in both StudentTable and StudentRow to remove the warning in the console.  If you don't add this then your app will still work. Code should look like this:
+
+StudentRow: https://github.com/claraj/vue-week-3-student-sign-in/blob/4286ab2354bf1f8cbbd3873ae7ebb2917aa422da/src/components/StudentRow.vue#L16 and
+
+StudentTable: https://github.com/claraj/vue-week-3-student-sign-in/blob/4286ab2354bf1f8cbbd3873ae7ebb2917aa422da/src/components/StudentTable.vue#L39
+
+Binding the student.present to the checkboxes
+Your input checkbox needs
+v-bind:checked="student.present"
+
+ And
+
+$event.srcElement.checked should also be $event.target.checked, as you wrote in an earlier video
+
+So, StudentRow will look like this https://github.com/claraj/vue-week-3-student-sign-in/blob/4286ab2354bf1f8cbbd3873ae7ebb2917aa422da/src/components/StudentRow.vue#L5

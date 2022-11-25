@@ -27,7 +27,9 @@
               v-for="student in students"
               v-bind:student = "student"
               v-bind:key = "student.starID"
-              v-on:student-arrived-or-left="arrivedOrLeft">
+              v-on:student-arrived-or-left="arrivedOrLeft"
+              v-on:delete-student="deleteStudent">
+<!--            ^^^from studentRow.vue where the deleted student event happened:-->
 <!--              v-bind:class=" { present: student.present, absent: !student.present } ">-->
 <!--            remove all table data things because they will be in the table rowsvvv-->
 <!--            <td>{{ student.name }}</td>-->
@@ -75,11 +77,15 @@ export default {
     arrivedOrLeft(student, present) {
     //  what should happen when a box is checked or unchecked? Should studentTable deal with it? NO!!
     //  studentTable's parent (App.vue) will deal with it
-    //  TODO emit message to parent.(after v-binding the checked box above)
+    //  TODOn emit message to parent.(after v-binding the checked box above)
     //  present is: is the box checked or not (from above:"arrivedOrLeft(student, $event.target.checked)")
       this.$emit('student-arrived-or-left', student, present)
     //  an event with a name student-arrived-or-left will be emitted, and it will carry with it a
     //    payload (data) with the status of student object (name and starID) and whether they are present
+    },
+    deleteStudent(student){
+      this.$emit('delete-student', student)
+    //      ^^^passing argument onto the parent, go to App.vue
     }
   }
 }

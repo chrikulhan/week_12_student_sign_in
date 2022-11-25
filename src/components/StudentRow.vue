@@ -8,6 +8,9 @@
       <input type="checkbox" v-bind="student.present" v-on:change="arrivedOrLeft(student, $event.srcElement.checked)">
       <!-- after one-way data binding (v-bind), then we need to emit a message to a parent (App.vue)**Head down to methodsVVV-->
     </td>
+<!--    this will import the delete icon from the assets folder in this project-->
+<!--    add a v-on click element here to make the icon functional.-->
+    <td><img v-on:click="deleteStudent" src="@/assets/delete.png"></td>
   </tr>
 </template>
 
@@ -22,6 +25,13 @@
     methods: {
       arrivedOrLeft(student, present){
         this.$emit('student-arrived-or-left', student, present)
+      },
+      //from v-on:click on delete icon (above)
+      deleteStudent() {
+      //  needs to tell parent to delete student, but StudentTable.vue can't delete students either,
+      //  but StudentTable can its parent (App.vue) and then it can delete the student.
+        this.emit('delete-student', this.student)
+      //  go to STudentTable.vue
       }
     }
   }
