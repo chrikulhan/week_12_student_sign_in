@@ -64,8 +64,14 @@ export default {
 
       //TODO emit message to parent (App.vue) with new student,
       //app.vue will decide what to do with the new student.
-      //will add to a list of students, that's not happening on in
+      //will add to a list of students, that's not happening in
       //this NewStudentForm.vue
+
+      //  vvv this is the message that will be sent to app.vue
+        this.$emit('student-added', student)
+      //  student = new student object created above when the errors === 0
+      //  ^^^this.$emit(event/message-sent, argument/data)
+      //  head to app.vue to prepare it to receive this message
 
       this.newStudentName = ''
       this.newStarID = ''

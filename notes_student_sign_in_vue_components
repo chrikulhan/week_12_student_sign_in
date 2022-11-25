@@ -1,0 +1,9 @@
+What should happen when Add button in NewStudentForm is pressed?
+
+-The NewStudentForm component should emit message to parent
+    - in this project, that's App.vue
+-NewStudentForm's job is to show a form, get input, validate
+    – it doesn't care what happens to the new student once it's created
+
+-Parent component (App.vue) will keep list of students
+-Parent component will provide list to StudentTable component

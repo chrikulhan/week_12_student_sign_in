@@ -1,7 +1,14 @@
 <template>
   <div id="app">
-    <new-student-form></new-student-form>
-    <student-table></student-table>
+<!--    vvv came from $emit in NewStudentForm, use the name used in this string
+        in NewStudentForm (this.$emit('student-added', student)-->
+<!--    when the v-on:student-added happens, call a method in app.vue called-->
+    <new-student-form v-on:student-added="newStudentAdded"> </new-student-form>
+<!--    in order to get the data to show up on the webpage, you have to get the app.vue (parent)
+        to connect the StudentTable's prop (students) has to be provided by the parent of
+         StudentTable(App.vue) using v-bind.vvv
+        (name of prop and the data are the same here, but they don't have to be.-->
+    <student-table v-bind:students="students"> </student-table>
     <student-message></student-message>
 
  </div>
@@ -19,20 +26,25 @@ export default {
     StudentMessage,
     StudentTable
   },
-//  after the set-up, HERE is where you add data:
+  //needs to be a function that returns an object:, will use the data from newStudentAdded above:
   data() {
     return {
-    wyrQuestion: 'Would you rather never have to take a bath/shower but still always smell nice or never have to get ' +
-        'another shot but still be healthy?',
-      wyrAnswer1: 'No bathing, but always smell nice.',
-      wyrAnswer2: 'No shots, but still be healthy.',
-      userSelectionMessage: ''
-   //
+      //empty array to start with vvv:
+      students: []
     }
   },
+  //then add a method to be called when the message is emited from New Student Form, added to app.vue above,
+  //and then the array students: [] will have something in it.
   methods: {
-    answerChanged(choice) {
-      this.userSelectionMessage = `Thanks! You chose ${choice}`
+    newStudentAdded(student) {
+      //this will push the data to the array
+      this.students.push(student)
+    // sort the students:vv
+      this.students.sort(function(s1, s2) {
+        // return minus or plus one depending on the order of the newly added student name
+        //( ? -1 : 1 )
+        return s1.name.toLowerCase() < s2.name.toLowerCase() ? -1 : 1
+      })
     }
   }
 }
