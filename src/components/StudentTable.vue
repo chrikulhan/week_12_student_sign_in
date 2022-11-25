@@ -10,20 +10,33 @@
             <th>StarID</th>
             <th>Present?</th>
           </tr>
-          <tr v-for="student in students" v-bind:class=" { present: student.present, absent: !student.present } ">
-            <td>{{ student.name }}</td>
-            <td>{{ student.starID }}</td>
-<!--            <td> vvv <input type="checkbox" v-model="student.present" v-on:change="arrivedOrLeft(student)"></td>-->
-<!--            remove v-model (used in the input in StudentTable)
-                **v-model has 2 way data binding, if the checkbox changes, then whatever is v-modeled also changes  :-->
-<!--            *change v-model to v-bind (one way data binding) (to bind the checked property of a checkbox to student.present.)
-                *$event.target is the html component that caused this event (checkbox), .checked (is the checkbox checked or not (will be true or false).-->
-             <td>
-               <input type="checkbox" v-bind="student.present" v-on:change="arrivedOrLeft(student, $event.target.checked)">
-<!--               after one-way data binding (v-bind), then we need to emit a message to a parent (App.vue)**Head down to methodsVVV-->
-             </td>
+<!--          copied this table row to StudentRow.vue, now change tr to student-row:-->
+<!--          <tr v-for="student in students" v-bind:class=" { present: student.present, absent: !student.present } ">-->
+<!--            <td>{{ student.name }}</td>-->
+<!--            <td>{{ student.starID }}</td>-->
+<!--&lt;!&ndash;            <td> vvv <input type="checkbox" v-model="student.present" v-on:change="arrivedOrLeft(student)"></td>&ndash;&gt;-->
+<!--&lt;!&ndash;            remove v-model (used in the input in StudentTable)-->
+<!--                **v-model has 2 way data binding, if the checkbox changes, then whatever is v-modeled also changes  :&ndash;&gt;-->
+<!--&lt;!&ndash;            *change v-model to v-bind (one way data binding) (to bind the checked property of a checkbox to student.present.)-->
+<!--                *$event.target is the html component that caused this event (checkbox), .checked (is the checkbox checked or not (will be true or false).&ndash;&gt;-->
+<!--             <td>-->
+<!--               <input type="checkbox" v-bind="student.present" v-on:change="arrivedOrLeft(student, $event.target.checked)">-->
+<!--&lt;!&ndash;               after one-way data binding (v-bind), then we need to emit a message to a parent (App.vue)**Head down to methodsVVV&ndash;&gt;-->
+<!--             </td>-->
+          <student-row
+              v-for="student in students"
+              v-bind:student = "student"
+              v-bind:key = "student.starID"
+              v-on:student-arrived-or-left="arrivedOrLeft">
+<!--              v-bind:class=" { present: student.present, absent: !student.present } ">-->
+<!--            remove all table data things because they will be in the table rowsvvv-->
+<!--            <td>{{ student.name }}</td>-->
+<!--            <td>{{ student.starID }}</td>-->
+<!--               <td>-->
+<!--              <input type="checkbox" v-bind="student.present" v-on:change="arrivedOrLeft(student, $event.target.checked)">&lt;!&ndash;               after one-way data binding (v-bind), then we need to emit a message to a parent (App.vue)**Head down to methodsVVV&ndash;&gt;-->
+<!--            </td>-->
+          </student-row>
 
-          </tr>
         </table>
       </div>
     </div>
@@ -32,6 +45,11 @@
 </template>
 
 <script>
+
+//list all the child components:
+
+import StudentRow from "@/components/StudentRow";
+
 export default {
   //create the component here:
   //whatever is created here "export" will be available to another
@@ -41,6 +59,10 @@ export default {
   //App.vue will manage the list (the array of students) and will provide that data to student table using a prop.
   //StudentTable's job will be to display that list of students in a table.
 
+  components: {
+    //this will let StudentTable know it has a StudentRow component
+    StudentRow
+  },
   //from the method: arrivedOrLeft(student, present) {this.$emit('student-arrived-or-left', student, present)
   emits: ['student-arrived-or-left'], //then go to app.vue, student-table
   props: {
@@ -65,14 +87,15 @@ export default {
 
 <style scoped>
 /*scoped means these component styles will only apply here, not on other components. */
-.present {
-  color:grey;
-  font-style: italic;
-}
+/*remove the styles and move them to StudentRow.vue*/
+/*.present {*/
+/*  color:grey;*/
+/*  font-style: italic;*/
+/*}*/
 
-.absent {
-  color: black;
-  font-weight: bold;
-}
+/*.absent {*/
+/*  color: black;*/
+/*  font-weight: bold;*/
+/*}*/
 
 </style>

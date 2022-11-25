@@ -28,3 +28,32 @@ with student info, and state of checkbox- checked or unchecked.
 -Because student data is reactive, and bound to the student prop in StudentTable,
 then info will flow back to StudentTable sees the updates, AND the template will then update.
 
+***Rows as components: **
+
+New file – src/components/StudentRow.vue
+
+This is really useful if the rows are complex – one row can manage just one student's data
+
+Example: social media app timeline/newsfeed
+A status update might have text, image, links, like/upvote buttons
+Each status update is one row in a list or table
+Each status update can be a component
+
+***video 6 notes:**
+Listing events that are emitted:
+
+As you add events to your components, you'll need to add
+
+emits: ['student-arrived-or-left']
+in both StudentTable and StudentRow to remove the warning in the console.
+If you don't add this then your app will still work.
+
+Binding the student.present to the checkboxes
+
+Your input checkbox needs
+v-bind:checked="student.present"
+which somehow went missing in this video.
+
+$event.srcElement.checked should also be $event.target.checked, as you wrote in the last video.
+
+The input element will look like this, https://github.com/claraj/vue-week-3-student-sign-in/blob/4286ab2354bf1f8cbbd3873ae7ebb2917aa422da/src/components/StudentRow.vue#L5

@@ -99,6 +99,6 @@ https://www.w3schools.com/cssref/pr_import_rule.asp
 
 */
 
-@import "https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css";
+@import "https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css";
 
 </style>
