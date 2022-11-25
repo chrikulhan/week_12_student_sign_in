@@ -41,6 +41,9 @@ export default {
   //  javascript will read this file and "export default" means whatever is created
   //  here will be available to that other file.
   name: "NewStudentForm.vue",
+  //list events ThisStudentForm.vue might emit:
+  //emitting student-added event from way below
+  emits: ['student-added'], //document the array of events this component emits
   data() {
     return {
       newStudentName: '',

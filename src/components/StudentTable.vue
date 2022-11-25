@@ -13,7 +13,12 @@
           <tr v-for="student in students" v-bind:class=" { present: student.present, absent: !student.present } ">
             <td>{{ student.name }}</td>
             <td>{{ student.starID }}</td>
-            <td> <input type="checkbox" v-model="student.present" v-on:change="arrivedOrLeft(student)"></td>
+<!--            <td> <input type="checkbox" v-model="student.present" v-on:change="arrivedOrLeft(student)"></td>-->
+<!--            remove v-model (used in the input in StudentTable)
+                **v-model has 2 way data binding, if the checkbox changes, then whatever is v-modeled also changes  :-->
+<!--            *change v-model to v-bind (to bind the checked property of a checkbox to student.present.  -->
+            <td> <input type="checkbox" v-bind="student.present" v-on:change="arrivedOrLeft(student)"></td>
+<!--            vid 5 stalled out at 12:00-->
           </tr>
         </table>
       </div>
@@ -48,5 +53,14 @@ export default {
 
 <style scoped>
 /*scoped means these component styles will only apply here, not on other components. */
+.present {
+  color:grey;
+  font-style: italic;
+}
+
+.absent {
+  color: black;
+  font-weight: bold;
+}
 
 </style>

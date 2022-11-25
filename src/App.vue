@@ -51,5 +51,14 @@ export default {
 </script>
 
 <style>
+/*to apply styles from bootstrap to the whole page, go here: https://getbootstrap.com/docs/4.6/getting-started/introduction/
+snag the href from the css listed:
+This will import all the bootstrap styles, so it looks a lot like the original student sign in page we made.
+Import Boostrap into App.vue using the CSS @import rule
+https://www.w3schools.com/cssref/pr_import_rule.asp
+
+*/
+
+@import "https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css";
 
 </style>

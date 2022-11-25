@@ -7,3 +7,24 @@ What should happen when Add button in NewStudentForm is pressed?
 
 -Parent component (App.vue) will keep list of students
 -Parent component will provide list to StudentTable component
+
+***Problem - we shouldn't modify props***
+-Using v-model student.present changes data in the student array
+-We should avoid this - bad practice to modify props
+-Child components should not change data in their parents - they should only communicate via events
+  "data down, events up"
+
+***"Data down, events up" (week 10, slide 86)
+-StudentTable receives students as a prop
+-StudentTable diplays data in template
+-When user checks checkbox (we want to remove the v-model) We want StudentTable to emit an event to parent
+with student info, and state of checkbox- checked or unchecked.
+-App.vue receives the event (ex. a specific student has arrived) and updates (modifies its data) student data
+    *App.vue will:
+        -find the student in the array,
+        -update whether or not they are present
+
+-App.vue doesn't have to do anything else as the data is reactive:
+-Because student data is reactive, and bound to the student prop in StudentTable,
+then info will flow back to StudentTable sees the updates, AND the template will then update.
+
