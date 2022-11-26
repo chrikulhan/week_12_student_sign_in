@@ -10,7 +10,11 @@
     </td>
 <!--    this will import the delete icon from the assets folder in this project-->
 <!--    add a v-on click element here to make the icon functional.-->
-    <td><img v-on:click="deleteStudent" src="@/assets/delete.png"></td>
+<!--    <td><img v-on:click="deleteStudent" src="@/assets/delete.png"></td>-->
+<!--    show or not show this td depending on whether the edit box is toggled:-->
+    <td v-show="edit">
+      <img class = "delete-icon" v-on:click="deleteStudent" src="@/assets/delete.png">
+    </td>
   </tr>
 </template>
 
@@ -20,7 +24,8 @@
     name: 'StudentRow',
     emits: ['student-arrived-or-left'],
     props: {
-      student: Object
+      student: Object,
+      edit: Boolean
     },
     methods: {
       arrivedOrLeft(student, present){
@@ -28,9 +33,11 @@
       },
       //from v-on:click on delete icon (above)
       deleteStudent() {
-      //  needs to tell parent to delete student, but StudentTable.vue can't delete students either,
-      //  but StudentTable can its parent (App.vue) and then it can delete the student.
-        this.emit('delete-student', this.student)
+        if (confirm(`Delete ${this.student.name}?`)) {
+          //  needs to tell parent to delete student, but StudentTable.vue can't delete students either,
+          //  but StudentTable can its parent (App.vue) and then it can delete the student.
+          this.$emit('delete-student', this.student)
+        }
       //  go to STudentTable.vue
       }
     }
@@ -47,6 +54,10 @@
 .absent {
   color: black;
   font-weight: bold;
+}
+
+.delete-icon {
+  height: 20px;
 }
 
 </style>

@@ -50,46 +50,49 @@ export default {
   },
   //then add a method to be called when the message is emitted from New Student Form, added to app.vue above,
   //and then the array students: [] will have something in it.
-  methods: {
-    newStudentAdded(student) {
-      //this will push the data to the array
-      this.students.push(student)
-    // sort the students:vv
-      this.students.sort(function(s1, s2) {
-        // return minus or plus one depending on the order of the newly added student name
-        //( ? -1 : 1 )
-        return s1.name.toLowerCase() < s2.name.toLowerCase() ? -1 : 1
-      })
-    },
-    // now add method StudentArrivedOrLeft in App.vue from <student-table> above in app.vue
-    // will have 2 arguments:
-    studentArrivedOrLeft(student, present) {
-    //    this will arrive from StudentTable, go through above <student-table> and be unpacked here in the
-    //    same order (student, present) as listed in the method (studentArrivedOrLeft(student,present))
-    //  todo find student in array of students
-    //  todo update their present attribute
-    //  use the find function in javascript (https://developer.mozilla.org/en-US/docs/Web/javaScript/reference/global_Objects/array/find)
-    //  to find the first matching element in an array
-    //  here expecting only one matching student (or zero if there is an error)
-    //  student = s, return true if that's the student we're looking for.
-      let updateStudent = this.students.find( function(s){
-        //student is the argument
-        if (s.name === student.name && s.starID === student.starID){
-        //  this is the student we were looking for , so return true:
+    methods: {
+      newStudentAdded(student) {
+        //this will push the data to the array
+        this.students.push(student)
+      // sort the students:vv
+        this.students.sort(function(s1, s2) {
+          // return minus or plus one depending on the order of the newly added student name
+          //( ? -1 : 1 )
+          return s1.name.toLowerCase() < s2.name.toLowerCase() ? -1 : 1
+        })
+      },
+      // now add method StudentArrivedOrLeft in App.vue from <student-table> above in app.vue
+      // will have 2 arguments:
+      studentArrivedOrLeft(student, present) {
+      //    this will arrive from StudentTable, go through above <student-table> and be unpacked here in the
+      //    same order (student, present) as listed in the method (studentArrivedOrLeft(student,present))
+      //  todo find student in array of students
+      //  todo update their present attribute
+      //  use the find function in javascript (https://developer.mozilla.org/en-US/docs/Web/javaScript/reference/global_Objects/array/find)
+      //  to find the first matching element in an array
+      //  here expecting only one matching student (or zero if there is an error)
+      //  student = s, return true if that's the student we're looking for.
+        let updateStudent = this.students.find( function(s){
+          //student is the argument
+          if (s.name === student.name && s.starID === student.starID){
+          //  this is the student we were looking for , so return true:
+            return true
+          }
+        })
+
+        if (updateStudent) {
+          updateStudent.present = present
+          // from mostRecentStudent above:
+          this.mostRecentStudent = student
+        //  now tell studentMessage about the updated student in the template using v-bind (way at the top)
+        }
+      },
+      deleteStudent(student) {
+        this.students = this.students.filter( function(s){
+        //  filter returns a new array of all students for whom the function returns true.
+        if (s != student) {
           return true
         }
-      })
-
-      if (updateStudent) {
-        updateStudent.present = present
-        // from mostRecentStudent above:
-        this.mostRecentStudent = updateStudent
-      //  now tell studentMessage about the updated student in the template using v-bind (way at the top)
-      }
-    },
-    deleteStudent(student) {
-      this.students=this.students.filter( function(s){
-      //  filter returns a new array of all students for whom the function returns true.
       })
     //  ^^^filter has a function as an argument (s), it will check every student in the students array
     //    if the student matches a condition the student will be kept.

@@ -3,12 +3,22 @@
 <!--    copied and pasted the table from vue-week-2-starter-student_sign_in.html-->
     <div class="card student-list m-2 p-2">
       <h4 class="card-title">Student List</h4>
+
+      <div class="edit-table-toggle form-check">
+        <input id="edit-table" type="checkbox" class="form-check-input" v-model="editTable">
+        <label for="edit-table" class="form-check-label">Edit table?</label>
+<!--        go to data (after props) below-->
+      </div>
+
       <div id="student-table">
         <table class="table">
           <tr>
             <th>Name</th>
             <th>StarID</th>
             <th>Present?</th>
+<!--            in order to select this whole table row when the edit checkbox is toggled, can show or not show Delete:-->
+<!--            <th>Delete</th>-->
+            <th v-show="editTable">Delete</th>
           </tr>
 <!--          copied this table row to StudentRow.vue, now change tr to student-row:-->
 <!--          <tr v-for="student in students" v-bind:class=" { present: student.present, absent: !student.present } ">-->
@@ -24,11 +34,12 @@
 <!--&lt;!&ndash;               after one-way data binding (v-bind), then we need to emit a message to a parent (App.vue)**Head down to methodsVVV&ndash;&gt;-->
 <!--             </td>-->
           <student-row
-              v-for="student in students"
-              v-bind:student = "student"
-              v-bind:key = "student.starID"
+              v-for="student in students" v-bind:key="student.name"
+              v-bind:student="student"
+              v-bind:edit="editTable"
               v-on:student-arrived-or-left="arrivedOrLeft"
               v-on:delete-student="deleteStudent">
+            <!-- v-bind make the delete image not visible when the edit checkbox is not checked. -->
 <!--            ^^^from studentRow.vue where the deleted student event happened:-->
 <!--              v-bind:class=" { present: student.present, absent: !student.present } ">-->
 <!--            remove all table data things because they will be in the table rowsvvv-->
@@ -70,6 +81,11 @@ export default {
   props: {
     //this will be the type of data, which is an array.
     students: Array
+  },
+  data() {
+    return {
+      editTable: false
+    }
   },
   //  add the arrivedOrLeft method
   methods: {
