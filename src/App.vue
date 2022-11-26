@@ -14,7 +14,7 @@
     <student-table
         v-bind:students="students"
         v-on:student-arrived-or-left="studentArrivedOrLeft"
-        v-on:delete-student="deleteStudent"> </student-table>
+        v-on:delete-student="studentDeleted"> </student-table>
 <!--    now add method StudentArrivedOrLeft in App.vue below:-->
 <!--    then add deleteStudent to methods-->
 
@@ -87,7 +87,7 @@ export default {
         //  now tell studentMessage about the updated student in the template using v-bind (way at the top)
         }
       },
-      deleteStudent(student) {
+      studentDeleted(student) {
         this.students = this.students.filter( function(s){
         //  filter returns a new array of all students for whom the function returns true.
         if (s != student) {
@@ -97,6 +97,8 @@ export default {
     //  ^^^filter has a function as an argument (s), it will check every student in the students array
     //    if the student matches a condition the student will be kept.
     //  if the student doesn't match the condition, they will be filtered out **removed.
+    //    todo clear the welcome and goodbye message:
+        this.mostRecentStudent =''
     }
   }
 }

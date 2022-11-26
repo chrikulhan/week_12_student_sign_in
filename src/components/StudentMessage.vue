@@ -3,8 +3,7 @@
 <!--    copied from: vue-week-2-starter-student-sign-in (just above script)-->
 <!--    <div v-if="mostRecentStudent.name">-->
 <!--    simplify:-->
-    <div v-if="student.name">
-
+    <div v-show="student.name">
       <div class="alert alert-success" v-if="student.present">
         Welcome, {{ student.name }}
       </div>
