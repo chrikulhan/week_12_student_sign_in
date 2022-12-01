@@ -1,4 +1,5 @@
 <template>
+  <div>
 
 <!--    copied from: vue-week-2-starter-student-sign-in (just above script)-->
 <!--    <div v-if="mostRecentStudent.name">-->
@@ -7,14 +8,12 @@
       <div class="alert alert-success" v-if="student.present">
         Welcome, {{ student.name }}
       </div>
-
-      <div class="alert alert-info" v-else>
+      <div v-else class="alert alert-info">
         <!--^^doesn't need a condition after it, v-else will happen if v-if doesn't.-->
         Goodbye, {{ student.name }}. See you later!
       </div>
-
     </div>
-
+  </div>
 </template>
 
 <script>

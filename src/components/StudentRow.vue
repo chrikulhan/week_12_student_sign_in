@@ -1,7 +1,7 @@
 <template>
 <!--  copied tr from StudentTable (remove v-for)-->
 <!--  <tr v-for="student in students" v-bind:class=" { present: student.present, absent: !student.present } ">-->
-  <tr v-bind:class=" { present: student.present, absent: !student.present } ">
+  <tr v-bind:class="{ present: student.present, absent: !student.present }">
     <td>{{ student.name }}</td>
     <td>{{ student.starID }}</td>
     <td>
@@ -13,7 +13,7 @@
 <!--    <td><img v-on:click="deleteStudent" src="@/assets/delete.png"></td>-->
 <!--    show or not show this td depending on whether the edit box is toggled:-->
     <td v-show="edit">
-      <img class = "delete-icon" v-on:click="deleteStudent" src="@/assets/delete.png">
+      <img class="delete-icon" v-on:click="deleteStudent" src="@/assets/delete.png">
     </td>
   </tr>
 </template>
@@ -22,13 +22,13 @@
   export default {
     //name: 'after the name of the file', 'piece of data")
     name: 'StudentRow',
-    emits: ['student-arrived-or-left'],
+    emits: ['student-arrived-or-left', 'delete-student'],
     props: {
       student: Object,
       edit: Boolean
     },
     methods: {
-      arrivedOrLeft(student, present){
+      arrivedOrLeft(student, present) {
         this.$emit('student-arrived-or-left', student, present)
       },
       //from v-on:click on delete icon (above)

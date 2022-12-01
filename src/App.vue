@@ -13,8 +13,9 @@
         v-on: (name of event, what does App.vue do when that event happens?)  -->
     <student-table
         v-bind:students="students"
-        v-on:student-arrived-or-left="studentArrivedOrLeft"
-        v-on:delete-student="studentDeleted"> </student-table>
+        v-on:student-present="studentArrivedOrLeft"
+        v-on:delete-student="studentDeleted">
+    </student-table>
 <!--    now add method StudentArrivedOrLeft in App.vue below:-->
 <!--    then add deleteStudent to methods-->
 

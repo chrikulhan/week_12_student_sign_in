@@ -2,7 +2,7 @@
     <div>
 <!--    template here-->
 
-    <div class="alert alert-danger" v-if="errors.length > 0">
+    <div class="alert alert-danger" v-show="errors.length > 0">
       <!--            have an array of potential error messages-->
       <!--            make an unordered array -->
       <ul>
@@ -30,7 +30,6 @@
       <!--            then need to add the addStudent method in the let app Vue.createApp section below-->
       <button class="btn btn-primary" v-on:click="addStudent">Add</button>
     </div>
-
   </div>
 </template>
 
@@ -40,7 +39,7 @@ export default {
   //whatever is created here "export" will be available to another
   //  javascript will read this file and "export default" means whatever is created
   //  here will be available to that other file.
-  name: "NewStudentForm.vue",
+  name: 'NewStudentForm',
   //list events ThisStudentForm.vue might emit:
   //emitting student-added event from way below
   emits: ['student-added'], //document the array of events this component emits
@@ -57,9 +56,11 @@ export default {
       if (!this.newStudentName) {
         this.errors.push('Student name must be input.')
       }
+
       if (!this.newStarID) {
         this.errors.push('StarId must be entered.')
       }
+
       if (this.errors.length === 0) {
         let student = { name: this.newStudentName, starID: this.newStarID, present: false }//    **add new student object onto this.students (the array that is Vue data)
 
@@ -75,11 +76,10 @@ export default {
       //  student = new student object created above when the errors === 0
       //  ^^^this.$emit(event/message-sent, argument/data)
       //  head to app.vue to prepare it to receive this message
-
       this.newStudentName = ''
       this.newStarID = ''
       }
-    },
+    }
   }
 }
 </script>

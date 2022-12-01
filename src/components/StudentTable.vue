@@ -33,7 +33,7 @@
 <!--               <input type="checkbox" v-bind="student.present" v-on:change="arrivedOrLeft(student, $event.target.checked)">-->
 <!--&lt;!&ndash;               after one-way data binding (v-bind), then we need to emit a message to a parent (App.vue)**Head down to methodsVVV&ndash;&gt;-->
 <!--             </td>-->
-          <student-row
+          <StudentRow
               v-for="student in students" v-bind:key="student.name"
               v-bind:student="student"
               v-bind:edit="editTable"
@@ -48,12 +48,10 @@
 <!--               <td>-->
 <!--              <input type="checkbox" v-bind="student.present" v-on:change="arrivedOrLeft(student, $event.target.checked)">&lt;!&ndash;               after one-way data binding (v-bind), then we need to emit a message to a parent (App.vue)**Head down to methodsVVV&ndash;&gt;-->
 <!--            </td>-->
-          </student-row>
-
+          </StudentRow>
         </table>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -72,42 +70,41 @@ export default {
   //App.vue will manage the list (the array of students) and will provide that data to student table using a prop.
   //StudentTable's job will be to display that list of students in a table.
 
-  components: {
-    //this will let StudentTable know it has a StudentRow component
-    StudentRow
-  },
-  //from the method: arrivedOrLeft(student, present) {this.$emit('student-arrived-or-left', student, present)
-  emits: ['student-arrived-or-left'], //then go to app.vue, student-table
-  props: {
-    //this will be the type of data, which is an array.
-    students: Array
-  },
-  data() {
-    return {
-      editTable: false
-    }
-  },
-  //  add the arrivedOrLeft method
-  methods: {
-    // arrivedOrLeft() {
-    arrivedOrLeft(student, present) {
-    //  what should happen when a box is checked or unchecked? Should studentTable deal with it? NO!!
-    //  studentTable's parent (App.vue) will deal with it
-    //  TODOn emit message to parent.(after v-binding the checked box above)
-    //  present is: is the box checked or not (from above:"arrivedOrLeft(student, $event.target.checked)")
-      this.$emit('student-arrived-or-left', student, present)
-    //  an event with a name student-arrived-or-left will be emitted, and it will carry with it a
-    //    payload (data) with the status of student object (name and starID) and whether they are present
+  components: { StudentRow },
+    //^^^this will let StudentTable know it has a StudentRow component
+  //vvv from the method: arrivedOrLeft(student, present) {this.$emit('student-arrived-or-left', student, present)
+  emits: ['student-present', 'delete-student'],
+    data() {
+      return {
+        editTable: false
+      }
     },
-    deleteStudent(student){
-      this.$emit('delete-student', student)
-    //      ^^^passing argument onto the parent, go to App.vue
+  //then go to app.vue, student-table.
+    props: {
+      //this will be the type of data, which is an array.
+      students: Array
+    },
+//  add the arrivedOrLeft method
+    methods: {
+      // arrivedOrLeft() {
+      arrivedOrLeft(student, present) {
+        //  what should happen when a box is checked or unchecked? Should studentTable deal with it? NO!!
+        //  studentTable's parent (App.vue) will deal with it
+        //  TODOn emit message to parent.(after v-binding the checked box above)
+        //  present is: is the box checked or not (from above:"arrivedOrLeft(student, $event.target.checked)")
+        this.$emit('student-present', student, present)
+        //  an event with a name student-arrived-or-left will be emitted, and it will carry with it a
+        //    payload (data) with the status of student object (name and starID) and whether they are present
+      },
+      deleteStudent(student){
+        this.$emit('delete-student', student)
+        //      ^^^passing argument onto the parent, go to App.vue
+      }
     }
-  }
 }
 </script>
 
-<style scoped>
+<style>
 /*scoped means these component styles will only apply here, not on other components. */
 /*remove the styles and move them to StudentRow.vue*/
 /*.present {*/
@@ -119,5 +116,19 @@ export default {
 /*  color: black;*/
 /*  font-weight: bold;*/
 /*}*/
+
+#student-table {
+  max-height: 500px;
+  overflow: scroll;
+}
+
+.present-true {
+  color: grey;
+  font-style: italic;
+}
+
+.present-false {
+  font-weight: bold;
+}
 
 </style>
